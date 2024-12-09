@@ -51,9 +51,11 @@ function App() {
           console.error("Error en el Lens:", event.detail.error);
         });
 
+        // Solicitar permisos de cámara
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
         });
+
         const source = createMediaStreamSource(stream, {
           transform: Transform2D.MirrorX,
           cameraType: "front",
@@ -70,6 +72,16 @@ function App() {
         console.log("¡El Lens está en ejecución!");
       } catch (error) {
         console.error("Error al inicializar Camera Kit:", error);
+        if (
+          error.name === "NotAllowedError" ||
+          error.name === "PermissionDeniedError"
+        ) {
+          // El usuario no otorgó permisos de cámara o los ha denegado.
+          // Aquí puedes mostrar un mensaje al usuario, por ejemplo:
+          alert(
+            "No se han concedido permisos para usar la cámara. Por favor, habilita el acceso y vuelve a cargar la página."
+          );
+        }
       }
     };
 
