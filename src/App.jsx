@@ -118,20 +118,33 @@ function App() {
   };
 
   return (
-    <div className="relative w-full h-screen flex flex-col">
+    <div className="relative w-[100dvw] h-[100dvh] flex flex-col overflow-x-hidden overflow-y-hidden">
+      {/* Branding de la marca */}
+      <div className="absolute top-0 left-0 p-5 bg-black rounded-br-md">
+        <img
+          src="img/akapi.png" // Reemplaza con la ruta del logo
+          alt="Logo de la marca"
+          className="w-24 h-auto"
+        />
+      </div>
+
+      {/* Canvas */}
       <canvas ref={canvasRef} className="w-full h-full object-cover" />
 
-      <div className="absolute bottom-0 left-0 w-full bg-white overflow-x-scroll flex items-center gap-4 shadow-lg p-4">
+      {/* Barra de imágenes */}
+      <div className="absolute bottom-0 left-0 flex items-center gap-4 shadow-lg p-4 bg-black rounded-t-3xl min-w-full overflow-y-hidden">
         {data.map((item) => (
-          <div className="grid grid-cols-1" key={item.id}>
-            <img
-              key={item.id}
-              src={item.src}
-              alt={item.name}
-              className="w-16 h-16 rounded-full border-2 border-gray-300 cursor-pointer transform transition-transform duration-150"
+          <div className="grid grid-cols-1 justify-items-center" key={item.id}>
+            <div
+              className="w-12 h-12 rounded-full border-2 border-gray-300 cursor-pointer transform transition-transform duration-150"
+              style={{
+                backgroundImage: `url(${item.src})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
               onClick={(e) => handleLensChange(item.id, e)}
-            />
-            <p>{item.name}</p>
+            ></div>
+            <p className="text-white text-md font-bold">{item.name}</p>
           </div>
         ))}
       </div>
